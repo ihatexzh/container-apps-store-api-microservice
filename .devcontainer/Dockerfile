@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/dotnet:0-${VARIANT}
 RUN su vscode -c "umask 0002 && dotnet tool install -g Microsoft.Tye --version \"0.10.0-alpha.21420.1\" 2>&1"
 
 # [Choice] Go version
-ARG GO_VERSION="1.17"
+ARG GO_VERSION="1.22"
 RUN if [ "${GO_VERSION}" != "none" ]; then wget https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz -P /tmp && sudo tar -xzf /tmp/go${GO_VERSION}.linux-amd64.tar.gz -C /usr/local/ 2>&1 && echo "export PATH=/usr/local/go/bin:${PATH}" | sudo tee /etc/profile.d/go.sh; fi
 RUN GOBIN=/tmp/ /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@master && mv /tmp/dlv $GOPATH/bin/dlv-dap
 
