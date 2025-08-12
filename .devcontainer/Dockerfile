@@ -2,14 +2,14 @@
 ARG VARIANT=3.1
 FROM mcr.microsoft.com/vscode/devcontainers/dotnet:0-${VARIANT}
 
-# 新增：修复 Yarn GPG 密钥和源（放在所有 apt 操作之前）
+# 修复 Yarn GPG 密钥和源（修正语法错误）
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* \
     && apt-get update && apt-get install -y wget gnupg apt-transport-https ca-certificates \
-    && apt-key del 23E7166788B63E1E || true \  # 移除旧密钥
-    && rm -f /etc/apt/sources.list.d/yarn.list \  # 移除旧源
-    && wget -qO - https://raw.githubusercontent.com/yarnpkg/releases/gh-pages/debian/pubkey.gpg | apt-key add - \  # 添加新密钥
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \  # 添加新源
-    && apt-get update  # 重新更新包列表
+    && apt-key del 23E7166788B63E1E || true \
+    && rm -f /etc/apt/sources.list.d/yarn.list \
+    && wget -qO - https://raw.githubusercontent.com/yarnpkg/releases/gh-pages/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update
 
 RUN su vscode -c "umask 0002 && dotnet tool install -g Microsoft.Tye --version \"0.10.0-alpha.21420.1\" 2>&1"
 
