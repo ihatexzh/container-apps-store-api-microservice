@@ -7,6 +7,13 @@
 	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
 	"overrideCommand": false,
 
+	"features": {
+    	"ghcr.io/devcontainers/features/go:1": {
+      	"version": "1.22"
+	  	}  // 强制使用 1.22 版本
+    },
+
+
 	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
