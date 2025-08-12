@@ -7,11 +7,20 @@
 	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
 	"overrideCommand": false,
 
+	// 新增：指定完整的Go版本并添加构建参数
+	"build": {
+		"args": {
+			"GO_VERSION": "1.22.0",  // 使用完整版本号
+			"GO_DOWNLOAD_URL": "https://dl.google.com/go/go1.22.0.linux-amd64.tar.gz"  // 更换为Google官方源
+		}
+	},
+
+	// 保留之前的features配置
 	"features": {
-    	"ghcr.io/devcontainers/features/go:1": {
-      	"version": "1.22"
-	  	}  // 强制使用 1.22 版本
-    },
+		"ghcr.io/devcontainers/features/go:1": {
+			"version": "1.22.0"
+		}
+	},
 
 
 	// Use this environment variable if you need to bind mount your local source code into a new container.
